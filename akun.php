@@ -87,7 +87,7 @@
 </div>
 <div class="container-fluid navbar-fixed-bottom">
   <div class="row copyright text-center">
-    <p>@All Rights Reserved 2016</p>
+    <p>@Sistem Bengkel Alvin Motor</p>
   </div>
 </div>
 <script src="jquery.min.js"></script>
