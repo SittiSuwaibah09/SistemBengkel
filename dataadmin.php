@@ -118,11 +118,11 @@
               <tr>
                 <td><font id="font">1</font></td>
                 <td><font id="font">A001</font></td>
-                <td><font id="font">Firman</font></td>
-                <td><font id="font">Laki laki</font></td>
+                <td><font id="font">Fitri</font></td>
+                <td><font id="font">Perempuan</font></td>
                 <td><font id="font">Pamekasan</font></td>
                 <td><font id="font">17-09-99</font></td>
-                <td><font id="font">000111</font></td>
+                <td><font id="font">085665534454</font></td>
                 <td><a href=""><img src="edit.png"/></a></td>
                 <td><a href=">" onClick="return confirm('Anda Yakin Ingin Menghapusnya. . . ? ? ?')"><img src="hapus.png"/></a></td>
               </tr>
