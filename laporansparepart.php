@@ -2,10 +2,10 @@
 session_start();
 include 'koneksi.php';
 if(!isset($_SESSION['idnya'])){
-  header('location:login.php');}
+	header('location:login.php');}
 else{
-  $query=mysqli_query($koneksi,"select * from admin where ID_ADMIN = '$_SESSION[idnya]'") or die ("query error");
-  $tampil=mysqli_fetch_array($query);
+	$query=mysqli_query($koneksi,"select * from admin where ID_ADMIN = '$_SESSION[idnya]'") or die ("query error");
+	$tampil=mysqli_fetch_array($query);
 ?>
 
 <!DOCTYPE html>
@@ -87,15 +87,25 @@ else{
   </div><!-- /.container-fluid -->
 </nav>
 
-
 <div class="container">
   <div class="row">
-    <div class="col-sm-12 text-center">
+  <form class="navbar-form navbar-left" method="post">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search" name="cari">
+          <button type="submit" class="btn btn-primary">SUBMIT</button>
+          <a href="laporansparepart.php" class="btn btn-warning">RESET</a>
+        </div>
+  </form>
+	<?php
+	if(isset($_POST['cari'])){
+	$cari=$_POST['cari'];
+	?>
+<div class="col-sm-12 text-center">
     <h1>Data Sparepart</h1>
     </div>
-  <div class="col-sm-12">
-      <div class="table-responsive">
-        <table class="table table-hover table-striped table-bordered">
+	<div class="col-sm-12">
+    	<div class="table-responsive">
+    		<table class="table table-hover table-striped table-bordered">
               <thead>
               <tr class="text-center">
                 <td width="70"><font id="data">NO</font></td>
@@ -103,14 +113,12 @@ else{
                 <td width="115"><font id="data">NAMA PART</font></td>
                 <td width="145"><font id="data">QUANTYTY PART</font></td>
                 <td width="163"><font id="data">HARGA PART</font></td>
-                <td width="79"><font id="data">UPDATE</font></td>
-                <td width="79"><font id="data">DELETE</font></td>
               </tr>
               </thead>
-              <?php
+			  <?php
               include'koneksi.php';
               $nomer=1;
-              $ambil=mysqli_query($koneksi,"select * from part");
+              $ambil=mysqli_query($koneksi,"select * from part WHERE NAMA_PRT LIKE '%$cari%' or QUANTITY_PRT LIKE '%$cari%'");
               while($tampil=mysqli_fetch_array($ambil))
               {
               ?>
@@ -121,16 +129,25 @@ else{
                 <td><font id="font"><?php echo"$tampil[NAMA_PRT]";?></font></td>
                 <td><font id="font"><?php echo"$tampil[QUANTITY_PRT]";?></font></td>
                 <td><font id="font"><?php echo"$tampil[HARGA_PRT]";?></font></td>
-                <td><a href="editpart.php?<?php echo"idnya=$tampil[KODE_PART]";?>"><img src="edit.png"/></a></td>
-                <td><a href="deletpart.php?<?php echo"idnya=$tampil[KODE_PART]";?>" onClick="return confirm('Anda Yakin Ingin Menghapusnya. . . ? ? ?')"><img src="hapus.png"/></a></td>
-              </tr>
+                </tr>
               </tbody>
               <?php
-        }
-        ?>
+			  }
+			  ?>
             </table>
-        </div>    
-    </div>
+            <center>
+			<script language="JavaScript"> 
+				if (window.print) 
+				{
+				document.write('<form><input type=button name=print class=btn class=btn-info value="Print" onClick="window.print()"></form>');
+				}
+			</script>
+         </center>
+      </div>    
+  	</div>
+    <?php
+	}
+	?>
   </div>
 </div>
 

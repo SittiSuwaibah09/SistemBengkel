@@ -2,10 +2,10 @@
 session_start();
 include 'koneksi.php';
 if(!isset($_SESSION['idnya'])){
-  header('location:login.php');}
+	header('location:login.php');}
 else{
-  $query=mysqli_query($koneksi,"select * from admin where ID_ADMIN = '$_SESSION[idnya]'") or die ("query error");
-  $tampil=mysqli_fetch_array($query);
+	$query=mysqli_query($koneksi,"select * from admin where ID_ADMIN = '$_SESSION[idnya]'") or die ("query error");
+	$tampil=mysqli_fetch_array($query);
 ?>
 
 <!DOCTYPE html>
@@ -87,50 +87,56 @@ else{
   </div><!-- /.container-fluid -->
 </nav>
 
-
 <div class="container">
   <div class="row">
-    <div class="col-sm-12 text-center">
+  	<div class="col-sm-12 text-center">
     <h1>Data Sparepart</h1>
     </div>
-  <div class="col-sm-12">
-      <div class="table-responsive">
-        <table class="table table-hover table-striped table-bordered">
-              <thead>
-              <tr class="text-center">
-                <td width="70"><font id="data">NO</font></td>
-                <td width="101"><font id="data">KODE PART</font></td>
-                <td width="115"><font id="data">NAMA PART</font></td>
-                <td width="145"><font id="data">QUANTYTY PART</font></td>
-                <td width="163"><font id="data">HARGA PART</font></td>
-                <td width="79"><font id="data">UPDATE</font></td>
-                <td width="79"><font id="data">DELETE</font></td>
-              </tr>
-              </thead>
-              <?php
-              include'koneksi.php';
-              $nomer=1;
-              $ambil=mysqli_query($koneksi,"select * from part");
-              while($tampil=mysqli_fetch_array($ambil))
-              {
-              ?>
-              <tbody>
-              <tr>
-                <td><font id="font"><?php echo"$nomer";$nomer++;?></font></td>
-                <td><font id="font"><?php echo"$tampil[KODE_PART]";?></font></td>
-                <td><font id="font"><?php echo"$tampil[NAMA_PRT]";?></font></td>
-                <td><font id="font"><?php echo"$tampil[QUANTITY_PRT]";?></font></td>
-                <td><font id="font"><?php echo"$tampil[HARGA_PRT]";?></font></td>
-                <td><a href="editpart.php?<?php echo"idnya=$tampil[KODE_PART]";?>"><img src="edit.png"/></a></td>
-                <td><a href="deletpart.php?<?php echo"idnya=$tampil[KODE_PART]";?>" onClick="return confirm('Anda Yakin Ingin Menghapusnya. . . ? ? ?')"><img src="hapus.png"/></a></td>
-              </tr>
-              </tbody>
-              <?php
-        }
-        ?>
-            </table>
-        </div>    
-    </div>
+	<div class="col-sm-12">
+    	<div class="table-responsive">
+		<form id="form1" name="form1" method="post" action="updatepart.php">
+    	<table class="table table-hover table-striped table-bordered">
+       	<?php
+		include'koneksi.php';
+		$_GET['idnya'];
+		$cek=mysqli_query($koneksi,"select * from part where KODE_PART='$_GET[idnya]'");
+		$tampil=mysqli_fetch_array($cek);
+		?>
+        <thead>
+        <tr>
+          <td width="182" colspan="2" align="center">
+          <font id="font">Silahkan Edit!!!</font>
+            <input type="hidden" name="kode" id="textfield" value="<?php echo"$_GET[idnya]";?>" />
+          </td>
+        </tr>
+        </thead>
+        <tr>
+          <td>Nama Part</td>
+          <td>
+            <input  type="date" name="nama" value="<?php echo"$tampil[NAMA_PRT]";?>" />
+          </td>
+        </tr>
+         <tr>
+          <td>Quantity part</td>
+          <td>
+          <input  type="text" name="qty" value="<?php echo"$tampil[QUANTITY_PRT]";?>" />
+          </td>
+        </tr>
+         <tr>
+          <td>Harga Part</td>
+          <td>
+            <input type="text" name="harga" value="<?php echo"$tampil[HARGA_PRT]";?>" />
+          </td>
+        </tr>
+         <tr>
+          <td colspan="2">
+            <input type="submit" value="simpan" name="simpan" id="textfield4" />
+          </td>
+        </tr>
+      </table>
+      </form> 
+       </div>    
+  	</div>
   </div>
 </div>
 
