@@ -17,7 +17,7 @@
     
     <div class="col-md-4" align="center">
       <section class="login-form">
-        <form method="post" action="" role="login">
+        <form method="post" action="cek_login.php" role="login">
           <img src="blem.jpg" class="img-responsive" alt="Brand" />
           
           <input type="text" name="user" id="user" placeholder="user" required class="form-control input-lg"/>
@@ -25,7 +25,7 @@
           <input type="password" name="pass" id="pass" placeholder="Password" required class="form-control input-lg" />
           <div class="form-group">
           <button type="submit" class="btn btn-primary">SUBMIT</button>
-          <button type="button" class="btn btn-warning">REGISTER</a></button>
+          <button type="button" class="btn btn-warning"><a href="akun.php" >REGISTER</a></button>
           </div>
           
         </form>
