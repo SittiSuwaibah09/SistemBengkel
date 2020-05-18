@@ -1,9 +1,21 @@
+<?php
+session_start();
+include 'koneksi.php';
+if(!isset($_SESSION['idnya'])){
+	header('location:index.php');}
+else{
+	$query=mysqli_query($koneksi,"select * from admin where ID_ADMIN = '$_SESSION[idnya]'") or die ("query error");
+	$tampil=mysqli_fetch_array($query);
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Servis Motor</title>
 		<link href="bootstrap.min.css" rel="stylesheet">
+		<link href="datatables.min.css" rel="stylesheet">
 		<link href="stylee.css" rel="stylesheet">
 	</head>
 	<body>
@@ -106,37 +118,43 @@
 								<tr>
 									<td id="font2" width="520px"><font id="font">Nomer Urut</font></td>
 									<td>
-										<input type="text" name="idser" id="textfield2" />
+										<input type="text" placeholder="S01-S10" name="idser" id="textfield2" />
 									</td>
 								</tr>
 								<tr>
 									<td id="font2"><font id="font">Nama Admin</font></td>
 									<td>
-										<input type="text" name="idadmin" id="textfield2" />
-									</td>
-								</tr>
-								<tr>
-									<td id="font2"><font id="font">Nama Pelanggan</font></td>
-									<td>
-										<input type="text" name="idpelanggan" id="textfield2" />
+										<select name="namin">
+											<option>Pilih Nama Admin</option>
+												<?php 
+													include'koneksi.php';
+													$ambil=mysqli_query($koneksi,"select * from admin");
+													while ($brs=mysqli_fetch_array($ambil)){
+												?>
+											<option value="<?php echo "$brs[ID_ADMIN]";?>"><?php echo "$brs[NAMA_LENGKAP_AD]";?></option>
+												<?php
+													}
+												?>
+										</select>
 									</td>
 								</tr>
 								<tr>
 									<td id="font2"><font id="font">Tgl Service</font></td>
 									<td>
-										<input type="text" name="tgl" id="textfield2" />
+										<input type="date" name="tgl" id="textfield4" />
 									</td>
 								</tr>
 								<tr>
 									<td id="font2"><font id="font">Jenis Service</font></td>
 									<td>
-										<input type="text" name="jenis" id="textfield2" />
+										<input type="radio" name="jenis" id="radio" value="berat" /> Berat
+										<input type="radio" name="jenis" id="radio2" value="ringan" /> Ringan
 									</td>
 								</tr>
 								<tr>
 									<td id="font2"><font id="font">Total Bayar</font></td>
 									<td>
-										<input type="text" name="jumlah" id="textfield2" />
+										<input type="text" name="jumlah" id="textfield4" />
 									</td>
 								</tr>
 								<tr>
@@ -155,5 +173,11 @@
 				<p>Create by @Sistem Bengkel Alvin Motor</p>
 			</div>
 		</div>
+	<script src="jquery.min.js"></script>
+	<script src="bootstrap.min.js"></script>
+	<script src="datatables.min.js"></script>
 	</body>
 </html>
+<?php
+}
+?>

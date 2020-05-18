@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
--- http://www.phpmyadmin.net
+-- version 4.9.0.1
+-- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 20 Nov 2019 pada 10.21
--- Versi Server: 10.1.13-MariaDB
--- PHP Version: 5.6.23
+-- Waktu pembuatan: 18 Bulan Mei 2020 pada 19.00
+-- Versi server: 10.4.6-MariaDB
+-- Versi PHP: 7.3.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -56,8 +58,11 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`ID_ADMIN`, `NAMA_LENGKAP_AD`, `JENIS_KELAMIN_AD`, `ALAMAT_AD`, `TGL_LAHIR_AD`, `NO_TLP_AD`, `USERNAME`, `PASSWORD`) VALUES
-('A01', 'firman darussalam', 'laki-laki', 'jalan', '2004-03-11', '081974675947', 'firman', 'firman'),
-('A02', 'devi kurnia', 'perempuan', 'jalan', '2000-03-30', '087750286534', 'devi', 'devi');
+('A01', 'sitti suwaibah', 'perempuan', 'jalan', '2004-03-11', '081974675947', 'suwi', 'suwi'),
+('A02', 'sasri ninda', 'perempuan', 'jalan', '2000-03-30', '087750286534', 'ninda', 'ninda'),
+('A03', 'fitri anisa', 'perempuan', 'jalan', '2000-01-14', '087656565654', 'fitri', 'fitri'),
+('A04', 'dhea oky safitri', 'perempuan', 'jalan', '2000-05-11', '085434343213', 'dhea', 'dhea'),
+('A05', 'rini azlinda', 'perempuan', 'jalan', '2001-06-12', '087687565654', 'rini', 'rini');
 
 -- --------------------------------------------------------
 
@@ -132,8 +137,8 @@ CREATE TABLE `mekanik` (
 --
 
 INSERT INTO `mekanik` (`ID_MEKANIK`, `NAMA_MK`, `JENIS_KELAMIN_MK`, `ALAMAT_MK`, `TGL_LAHIR_MK`, `NO_TLP_MK`) VALUES
-('MK01', 'zainuddin', 'laki-laki', 'jalan', '2010-06-16', '081287634587'),
-('MK02', 'safdi', 'laki-laki', 'jalan', '2014-07-24', '082736547655'),
+('MK01', 'agung', 'laki-laki', 'jalan', '2010-06-16', '081287634587'),
+('MK02', 'andi', 'laki-laki', 'jalan', '2014-07-24', '082736547655'),
 ('MK03', 'rizal', 'laki-laki', 'jalan', '2010-05-10', '081736548765');
 
 -- --------------------------------------------------------
@@ -178,7 +183,8 @@ CREATE TABLE `part` (
 
 INSERT INTO `part` (`KODE_PART`, `NAMA_PRT`, `QUANTITY_PRT`, `HARGA_PRT`) VALUES
 ('P01', 'oli', 1, '40000'),
-('P02', 'seker', 1, '150000');
+('P02', 'seker', 1, '150000'),
+('P03', 'Sadel', 2, '50000');
 
 -- --------------------------------------------------------
 
@@ -199,12 +205,15 @@ CREATE TABLE `service` (
 --
 
 INSERT INTO `service` (`NO_URUT`, `ID_ADMIN`, `TGL_SERVIS`, `JENIS_SERVIS`, `TOTAL_BAYAR`) VALUES
-('S01', 'A01', '2019-11-06', 'berat', '100000');
+('S01', 'A01', '2019-11-06', 'berat', '100000'),
+('S02', 'A01', '2020-05-19', 'ringan', '100000'),
+('S03', 'A01', '2020-05-09', 'ringan', '100000');
 
 -- --------------------------------------------------------
 
 --
--- Stand-in structure for view `servis_view`
+-- Stand-in struktur untuk tampilan `servis_view`
+-- (Lihat di bawah untuk tampilan aktual)
 --
 CREATE TABLE `servis_view` (
 `nama_js` varchar(50)
@@ -218,20 +227,20 @@ CREATE TABLE `servis_view` (
 --
 DROP TABLE IF EXISTS `servis_view`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `servis_view`  AS  select `jasa`.`NAMA_JS` AS `nama_js`,count(`detail_service`.`KODE_JASA`) AS `jumlah_jasa` from (`detail_service` join `jasa` on((`detail_service`.`KODE_JASA` = `jasa`.`KODE_JASA`))) group by `detail_service`.`KODE_JASA` order by count(`detail_service`.`KODE_JASA`) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `servis_view`  AS  select `jasa`.`NAMA_JS` AS `nama_js`,count(`detail_service`.`KODE_JASA`) AS `jumlah_jasa` from (`detail_service` join `jasa` on(`detail_service`.`KODE_JASA` = `jasa`.`KODE_JASA`)) group by `detail_service`.`KODE_JASA` order by count(`detail_service`.`KODE_JASA`) ;
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `admin`
+-- Indeks untuk tabel `admin`
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`ID_ADMIN`);
 
 --
--- Indexes for table `detail_service`
+-- Indeks untuk tabel `detail_service`
 --
 ALTER TABLE `detail_service`
   ADD PRIMARY KEY (`NO_NOTA`),
@@ -242,31 +251,31 @@ ALTER TABLE `detail_service`
   ADD KEY `FK_RELATIONSHIP_6` (`KODE_JASA`);
 
 --
--- Indexes for table `jasa`
+-- Indeks untuk tabel `jasa`
 --
 ALTER TABLE `jasa`
   ADD PRIMARY KEY (`KODE_JASA`);
 
 --
--- Indexes for table `mekanik`
+-- Indeks untuk tabel `mekanik`
 --
 ALTER TABLE `mekanik`
   ADD PRIMARY KEY (`ID_MEKANIK`);
 
 --
--- Indexes for table `motor`
+-- Indeks untuk tabel `motor`
 --
 ALTER TABLE `motor`
   ADD PRIMARY KEY (`KODE_MOTOR`);
 
 --
--- Indexes for table `part`
+-- Indeks untuk tabel `part`
 --
 ALTER TABLE `part`
   ADD PRIMARY KEY (`KODE_PART`);
 
 --
--- Indexes for table `service`
+-- Indeks untuk tabel `service`
 --
 ALTER TABLE `service`
   ADD PRIMARY KEY (`NO_URUT`),
@@ -291,6 +300,7 @@ ALTER TABLE `detail_service`
 --
 ALTER TABLE `service`
   ADD CONSTRAINT `FK_MELAYANI_TRANSAKSI` FOREIGN KEY (`ID_ADMIN`) REFERENCES `admin` (`ID_ADMIN`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

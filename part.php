@@ -1,9 +1,21 @@
+<?php
+session_start();
+include 'koneksi.php';
+if(!isset($_SESSION['idnya'])){
+	header('location:login.php');}
+else{
+	$query=mysqli_query($koneksi,"select * from admin where ID_ADMIN = '$_SESSION[idnya]'") or die ("query error");
+	$tampil=mysqli_fetch_array($query);
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>Sparepart</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Servis Motor</title>
 		<link href="bootstrap.min.css" rel="stylesheet">
+		<link href="datatables.min.css" rel="stylesheet">
 		<link href="stylee.css" rel="stylesheet">
 	</head>
 	<body>
@@ -101,24 +113,31 @@
 				</div>
 				<div class="col-sm-12">
 					<div class="table-responsive">
-						<form class="navbar-form" method="post" action="simpan_service.php">
+						<form class="navbar-form" method="post" action="simpan_part.php">
 							<table class="table table-hover table-striped table-bordered">
+								<thead>
+									<tr>
+										<td id="font2"><font  id="font">Kode Part</font></td>
+										<td><input type="text" placeholder="P01-P10" name="kode" id="textfield2" /></td>
+									</tr>
+								</thead>
+								<tr>
 								<tr>
 									<td id="font2" width="520px"><font id="font">Nama Part</font></td>
 									<td>
-										<input type="text" name="idser" id="textfield2" />
+										<input type="text" name="nama" id="textfield4" />
 									</td>
 								</tr>
 								<tr>
 									<td id="font2"><font id="font">Quantity Part</font></td>
 									<td>
-										<input type="text" name="idadmin" id="textfield2" />
+										<input type="text" name="qty" id="textfield4" />
 									</td>
 								</tr>
 								<tr>
 									<td id="font2"><font id="font">Harga Part</font></td>
 									<td>
-										<input type="text" name="idpelanggan" id="textfield2" />
+										<input type="text" name="harga" id="textfield4" />
 									</td>
 								</tr>
 								<tr>
@@ -137,5 +156,11 @@
 				<p>Create by @Sistem Bengkel Alvin Motor</p>
 			</div>
 		</div>
+	<script src="jquery.min.js"></script>
+	<script src="bootstrap.min.js"></script>
+	<script src="datatables.min.js"></script>
 	</body>
 </html>
+<?php
+}
+?>
