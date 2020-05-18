@@ -1,3 +1,12 @@
+<?php
+session_start();
+include 'koneksi.php';
+if(!isset($_SESSION['idnya'])){
+	header('location:index.php');}
+else{
+	$query=mysqli_query($koneksi,"select * from admin where ID_ADMIN = '$_SESSION[idnya]'") or die ("query error");
+	$tampil=mysqli_fetch_array($query);
+?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -106,3 +115,6 @@
 <script src="bootstrap.min.js"></script>
   </body>
 </html>
+<?php
+}
+?>

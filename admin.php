@@ -2,7 +2,7 @@
 session_start();
 include 'koneksi.php';
 if(!isset($_SESSION['idnya'])){
-	header('location:login.php');}
+	header('location:index.php');}
 else{
 	$query=mysqli_query($koneksi,"select * from admin where ID_ADMIN = '$_SESSION[idnya]'") or die ("query error");
 	$tampil=mysqli_fetch_array($query);
