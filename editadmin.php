@@ -2,10 +2,10 @@
 session_start();
 include 'koneksi.php';
 if(!isset($_SESSION['idnya'])){
-  header('location:login.php');}
+	header('location:login.php');}
 else{
-  $query=mysqli_query($koneksi,"select * from admin where ID_ADMIN = '$_SESSION[idnya]'") or die ("query error");
-  $tampil=mysqli_fetch_array($query);
+	$query=mysqli_query($koneksi,"select * from admin where ID_ADMIN = '$_SESSION[idnya]'") or die ("query error");
+	$tampil=mysqli_fetch_array($query);
 ?>
 
 <!DOCTYPE html>
@@ -27,7 +27,6 @@ else{
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-
 <body>
     <nav class="navbar navbar-inverse">
   <div class="container-fluid">
@@ -90,50 +89,78 @@ else{
 
 <div class="container">
   <div class="row">
-    <div class="col-sm-12 text-center">
-    <h1>Data Account</h1>
+  	<div class="col-sm-12 text-center">
+    <h1>Data Admin</h1>
     </div>
-  <div class="col-sm-12">
-      <div class="table-responsive">
-        <table class="table table-hover table-striped table-bordered">
-              <thead>
-              <tr class="text-center">
-                <td width="70"><font id="data">NO</font></td>
-                <td width="101"><font id="data">ID ADMIN</font></td>
-                <td width="115"><font id="data">NAMA LENGKAP</font></td>
-                <td width="145"><font id="data">JENIS KELAMIN</font></td>
-                <td width="163"><font id="data">ALAMAT</font></td>
-                <td width="163"><font id="data">TGL LAHIR</font></td>
-                <td width="163"><font id="data">NO TELPON</font></td>
-                <td width="79"><font id="data">EDIT</font></td>
-                <td width="79"><font id="data">DELETE</font></td>
-              </tr>
-              </thead>
-              <?php
-              include'koneksi.php';
-              $nomer=1;
-              $ambil=mysqli_query($koneksi,"select * from admin");
-              while($tampil=mysqli_fetch_array($ambil))
-              {
-              ?>
-              <tbody>
-              <tr>
-                <td><font id="font"><?php echo"$nomer";$nomer++;?></font></td>
-                <td><font id="font"><?php echo"$tampil[ID_ADMIN]";?></font></td>
-                <td><font id="font"><?php echo"$tampil[NAMA_LENGKAP_AD]";?></font></td>
-                <td><font id="font"><?php echo"$tampil[JENIS_KELAMIN_AD]";?></font></td>
-                <td><font id="font"><?php echo"$tampil[ALAMAT_AD]";?></font></td>
-                <td><font id="font"><?php echo"$tampil[TGL_LAHIR_AD]";?></font></td>
-                <td><font id="font"><?php echo"$tampil[NO_TLP_AD]";?></font></td>
-                <td><a href="editadmin.php?<?php echo"idnya=$tampil[ID_ADMIN]";?>"><img src="edit.png"/></a></td>
-                <td><a href="deletadmin.php?<?php echo"idnya=$tampil[ID_ADMIN]";?>" onClick="return confirm('Anda Yakin Ingin Menghapusnya. . . ? ? ?')"><img src="hapus.png"/></a></td>
-              </tr>
-              </tbody>
-              <?php
-        }
-        ?>
-        </div>    
-    </div>
+	<div class="col-sm-12">
+    <div class="table-responsive">
+    <form id="form1" name="form1" method="post" action="updateadmin.php">
+      <table class="table table-hover table-striped table-bordered">
+       <?php
+		include'koneksi.php';
+		$_GET['idnya'];
+		$cek=mysqli_query($koneksi,"select * from admin where ID_ADMIN='$_GET[idnya]'");
+		$tampil=mysqli_fetch_array($cek);
+		?>
+        <thead>
+		<tr>
+          <td width="182" colspan="2" align="center">
+          <font id="font">Silahkan Edit!!!</font>
+            <input type="hidden" name="idad" id="textfield" value="<?php echo"$_GET[idnya]";?>" />
+          </td>
+        </tr>
+        </thead>
+        <tr>
+          <td id="font2"><font id="font">Nama Lengkap</font></td>
+          <td>
+            <input type="text" name="nama" id="textfield2" value="<?php echo"$tampil[NAMA_LENGKAP_AD]";?>" />
+          </td>
+        </tr>
+        <tr>
+          <td id="font2"><font id="font">Jenis Kelamin</font></td>
+          <td>
+            <input type="text" name="jenis" id="textfield3" value="<?php echo"$tampil[JENIS_KELAMIN_AD]";?>" />
+          </td>
+        </tr>
+        <tr>
+          <td id="font2"><font id="font">Alamat</font></td>
+          <td>
+            <input type="text" name="alamat" id="textfield3" value="<?php echo"$tampil[ALAMAT_AD]";?>" />
+          </td>
+        </tr>
+        <tr>
+          <td id="font2"><font id="font">Tgl Lahir</font></td>
+          <td>
+            <input type="text" name="tgl" value="<?php echo"$tampil[TGL_LAHIR_AD]";?>" />
+          </td>
+        </tr>
+        <tr>
+          <td id="font2"><font id="font">No Telpon</font></td>
+          <td>
+            <input type="text" name="notlp" value="<?php echo"$tampil[NO_TLP_AD]";?>" />
+          </td>
+         </tr>
+          <tr>
+          <td id="font2"><font id="font">Username</font></td>
+          <td>
+            <input type="text" name="user" value="<?php echo"$tampil[USERNAME]";?>" />
+          </td>
+          </tr>
+          <tr>
+          <td id="font2"><font id="font">Password</font></td>
+          <td>
+            <input type="password" name="pass" value="<?php echo"$tampil[PASSWORD]";?>" />
+          </td>
+          </tr>
+          <tr>
+          <td colspan="2">
+            <input type="submit" value="simpan" name="simpan" />
+          </td>
+        </tr>
+        </table>
+      </form>
+      </div>    
+  	</div>
   </div>
 </div>
 
