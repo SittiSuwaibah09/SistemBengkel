@@ -1,3 +1,13 @@
+<?php
+session_start();
+include 'koneksi.php';
+if(!isset($_SESSION['idnya'])){
+  header('location:login.php');}
+else{
+  $query=mysqli_query($koneksi,"select * from admin where ID_ADMIN = '$_SESSION[idnya]'") or die ("query error");
+  $tampil=mysqli_fetch_array($query);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -28,10 +38,10 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-       <img alt="Brand" src="blem.png"/>
+       <img alt="Brand" src="blem.jpg" alt="Brand" width="48" height="47"/>
     </div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
+   <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li><a href="home.php">Home</a></li>
@@ -40,20 +50,6 @@
           <ul class="dropdown-menu">
             <li><a href="mekanik.php">Add Data</a></li>
             <li><a href="datamekanik.php">Data Mekanik</a></li>
-          </ul>
-        </li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Motor<span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="motor.php">Add Data</a></li>
-            <li><a href="datamotor.php">Data Motor</a></li>
-          </ul>
-        </li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Jasa<span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="jasa.php">Add Data</a></li>
-            <li><a href="datajasa.php">Data Jasa</a></li>
           </ul>
         </li>
         <li class="dropdown">
@@ -66,12 +62,10 @@
           </ul>
         </li>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Service<span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Service Pelanggan<span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="service.php">Add Data</a></li>
             <li><a href="dataservice.php">Data Service</a></li>
-            <li><a href="detail.php">Add Data Detail</a></li>
-            <li><a href="datadetail.php">Data Detail Service</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="laporanservice.php">Laporan Service</a></li>
           </ul>
@@ -93,14 +87,15 @@
   </div><!-- /.container-fluid -->
 </nav>
 
+
 <div class="container">
   <div class="row">
-  	<div class="col-sm-12 text-center">
+    <div class="col-sm-12 text-center">
     <h1>Data Sparepart</h1>
     </div>
-	<div class="col-sm-12">
-    	<div class="table-responsive">
-    		<table class="table table-hover table-striped table-bordered">
+  <div class="col-sm-12">
+      <div class="table-responsive">
+        <table class="table table-hover table-striped table-bordered">
               <thead>
               <tr class="text-center">
                 <td width="70"><font id="data">NO</font></td>
@@ -112,27 +107,37 @@
                 <td width="79"><font id="data">DELETE</font></td>
               </tr>
               </thead>
+              <?php
+              include'koneksi.php';
+              $nomer=1;
+              $ambil=mysqli_query($koneksi,"select * from part");
+              while($tampil=mysqli_fetch_array($ambil))
+              {
+              ?>
               <tbody>
               <tr>
-                <td><font id="font">1.</font></td>
-                <td><font id="font">001sp</font></td>
-                <td><font id="font">sparepart 1</font></td>
-                <td><font id="font">10</font></td>
-                <td><font id="font">Rp 30.000</font></td>
-                <td><a href=" "><img src="edit.png"/></a></td>
-                <td><a href=" " onClick="return confirm('Anda Yakin Ingin Menghapusnya. . . ? ? ?')"><img src="hapus.png"/></a></td>
+                <td><font id="font"><?php echo"$nomer";$nomer++;?></font></td>
+                <td><font id="font"><?php echo"$tampil[KODE_PART]";?></font></td>
+                <td><font id="font"><?php echo"$tampil[NAMA_PRT]";?></font></td>
+                <td><font id="font"><?php echo"$tampil[QUANTITY_PRT]";?></font></td>
+                <td><font id="font"><?php echo"$tampil[HARGA_PRT]";?></font></td>
+                <td><a href="editpart.php?<?php echo"idnya=$tampil[KODE_PART]";?>"><img src="edit.png"/></a></td>
+                <td><a href="deletpart.php?<?php echo"idnya=$tampil[KODE_PART]";?>" onClick="return confirm('Anda Yakin Ingin Menghapusnya. . . ? ? ?')"><img src="hapus.png"/></a></td>
               </tr>
               </tbody>
+              <?php
+        }
+        ?>
             </table>
         </div>    
-  	</div>
+    </div>
   </div>
 </div>
 
 
 <div class="container-fluid navbar-fixed-bottom">
   <div class="row copyright text-center">
-    <p>@Sistem Bengkel Alvin Motor</p>
+    <p>@All Rights Reserved 2016</p>
   </div>
 </div>
 <script src="jquery.min.js"></script>
@@ -140,3 +145,6 @@
 <script src="datatables.min.js"></script>
 </body>
 </html>
+<?php
+}
+?>
