@@ -1,3 +1,13 @@
+<?php
+session_start();
+include 'koneksi.php';
+if(!isset($_SESSION['idnya'])){
+	header('location:index.php');}
+else{
+	$query=mysqli_query($koneksi,"select * from admin where ID_ADMIN = '$_SESSION[idnya]'") or die ("query error");
+	$tampil=mysqli_fetch_array($query);
+?>
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -99,16 +109,21 @@
                 <td><font id="data">Jumlah Bayar</font></td>
                 </tr>
               </thead>
+           <?php
+		  include'koneksi.php';
+		  $nomer=1;
+		  $ambil=mysqli_query($koneksi,"select * from admin natural join service where NAMA_LENGKAP_AD like '%$cari%' or JENIS_SERVIS like '%$cari%'");
+		  while($tampil=mysqli_fetch_array($ambil))
 		  {
 		  ?>
 		  <tbody>
               <tr>
-				<td><font id="font">"nomer"</font></td>
-                <td><font id="font">"NAMA_LENGKAP_AD"</font></td>
-                <td><font id="font">"NO_URUT"</font></td>
-                <td><font id="font">"TGL_SERVIS"</font></td>
-                <td><font id="font">"JENIS_SERVIS"</font></td>
-                <td><font id="font">"TOTAL_BAYAR"</font></td>
+				<td><font id="font"><?php echo"$nomer";$nomer++;?></font></td>
+                <td><font id="font"><?php echo"$tampil[NAMA_LENGKAP_AD]";?></font></td>
+                <td><font id="font"><?php echo"$tampil[NO_URUT]";?></font></td>
+                <td><font id="font"><?php echo"$tampil[TGL_SERVIS]";?></font></td>
+                <td><font id="font"><?php echo"$tampil[JENIS_SERVIS]";?></font></td>
+                <td><font id="font"><?php echo"$tampil[TOTAL_BAYAR]";?></font></td>
               </tr>
               </tbody>
               <?php
@@ -126,6 +141,22 @@
       </div>    
   	</div>
     <?php
-	
+	}
 	?>
-  
+  </div>
+</div>
+
+
+<div class="container-fluid navbar-fixed-bottom">
+  <div class="row copyright text-center">
+    <p>@Sistem Bengkel Alvin Motor</p>
+  </div>
+</div>
+<script src="jquery.min.js"></script>
+<script src="bootstrap.min.js"></script>
+<script src="datatables.min.js"></script>
+</body>
+</html>
+<?php
+}
+?>

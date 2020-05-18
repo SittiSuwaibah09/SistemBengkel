@@ -2,10 +2,10 @@
 session_start();
 include 'koneksi.php';
 if(!isset($_SESSION['idnya'])){
-  header('location:login.php');}
+	header('location:login.php');}
 else{
-  $query=mysqli_query($koneksi,"select * from admin where ID_ADMIN = '$_SESSION[idnya]'") or die ("query error");
-  $tampil=mysqli_fetch_array($query);
+	$query=mysqli_query($koneksi,"select * from admin where ID_ADMIN = '$_SESSION[idnya]'") or die ("query error");
+	$tampil=mysqli_fetch_array($query);
 ?>
 
 <!DOCTYPE html>
@@ -83,55 +83,66 @@ else{
 
 <div class="container">
   <div class="row">
-    <div class="col-sm-12 text-center">
-    <h1>Data Mekanik</h1>
+  	<div class="col-sm-12 text-center">
+    <h1>Data Admin</h1>
     </div>
-  <div class="col-sm-12">
+	<div class="col-sm-12">
     <div class="table-responsive">
-    <form class="navbar-form" method="post" action="simpan_mekanik.php">
-    <table class="table table-hover table-striped table-bordered">
+    <form id="form1" name="form1" method="post" action="updatemekanik.php">
+      <table class="table table-hover table-striped table-bordered">
+       <?php
+		include'koneksi.php';
+		$_GET['idnya'];
+		$cek=mysqli_query($koneksi,"select * from mekanik where ID_MEKANIK='$_GET[idnya]'");
+		$tampil=mysqli_fetch_array($cek);
+		?>
         <thead>
-        <tr>
-          <td id="font2"><font  id="font">Id Mekanik</font></td>
-          <td><input type="text" placeholder="MK01-MK10" name="idad" id="textfield2" /></td>
+		<tr>
+          <td width="182" colspan="2" align="center">
+          <font id="font">Silahkan Edit!!!</font>
+            <input type="hidden" name="idad" id="textfield" value="<?php echo"$_GET[idnya]";?>" />
+          </td>
         </tr>
         </thead>
         <tr>
-          <td id="font2"><font id="font">Nama Mekanik</font></td>
+          <td id="font2"><font id="font">Nama Lengkap</font></td>
           <td>
-            <input type="text" name="nama" id="textfield2" />          </td>
+            <input type="text" name="nama" id="textfield2" value="<?php echo"$tampil[NAMA_MK]";?>" />
+          </td>
         </tr>
         <tr>
           <td id="font2"><font id="font">Jenis Kelamin</font></td>
           <td>
-            <input type="radio" name="jenis" id="radio" value="laki-laki" />
-            Laki - Laki
-            <input type="radio" name="jenis" id="radio2" value="perempuan" />
-            Perempuan          </td>
+            <input type="text" name="jenis" id="textfield3" value="<?php echo"$tampil[JENIS_KELAMIN_MK]";?>" />
+          </td>
         </tr>
         <tr>
           <td id="font2"><font id="font">Alamat</font></td>
           <td>
-            <input type="text" name="alamat" id="textfield3" />          </td>
+            <input type="text" name="alamat" id="textfield3" value="<?php echo"$tampil[ALAMAT_MK]";?>" />
+          </td>
         </tr>
         <tr>
           <td id="font2"><font id="font">Tgl Lahir</font></td>
           <td>
-            <input type="date" name="tgl" id="textfield4" />          </td>
-         </tr>
+            <input type="text" name="tgl" value="<?php echo"$tampil[TGL_LAHIR_MK]";?>" />
+          </td>
+        </tr>
         <tr>
           <td id="font2"><font id="font">No Telpon</font></td>
           <td>
-            <input type="text" name="notlp" id="textfield4" />          </td>
+            <input type="text" name="notlp" value="<?php echo"$tampil[NO_TLP_MK]";?>" />
+          </td>
          </tr>
           <tr>
-          <td colspan="2" align="right">
-          <input type="submit" value="simpan" name="simpan" id="textfield4" />          </td>
-          </tr>
-         </table>
-        </form>
-        </div>    
-    </div>
+          <td colspan="2">
+            <input type="submit" value="simpan" name="simpan" />
+          </td>
+        </tr>
+        </table>
+      </form>
+      </div>    
+  	</div>
   </div>
 </div>
 
